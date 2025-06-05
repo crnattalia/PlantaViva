@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlantaViva | Cuidado de Plantas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variables de colores */
+        :root {
+            --primary-green: #2E7D32;
+            --secondary-green: #388E3C;
+            --light-green: #8BC34A;
+            --primary-yellow: #FFC107;
+            --secondary-yellow: #FFD54F;
+            --light-yellow: #FFF9C4;
+            --dark-text: #1B5E20;
+            --light-text: #F1F8E9;
+            --white: #FFFFFF;
+            --gray: #F5F5F5;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Reset y estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-yellow);
+            color: var(--dark-text);
+            line-height: 1.6;
+            background-image: linear-gradient(135deg, rgba(139, 195, 74, 0.05) 25%, transparent 25%), 
+                              linear-gradient(225deg, rgba(139, 195, 74, 0.05) 25%, transparent 25%), 
+                              linear-gradient(45deg, rgba(139, 195, 74, 0.05) 25%, transparent 25%), 
+                              linear-gradient(315deg, rgba(139, 195, 74, 0.05) 25%, transparent 25%);
+            background-size: 20px 20px;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header y navegación */
+        header {
+            background-color: var(--primary-green);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo i {
+            color: var(--primary-yellow);
+            margin-right: 10px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: var(--light-text);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background-color: var(--secondary-green);
+            transform: translateY(-2px);
+        }
+        
+        .nav-links a.active {
+            background-color: var(--primary-yellow);
+            color: var(--dark-text);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--white);
+            margin: 2px 0;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        /* Carrusel */
+        .carousel {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            margin: 2rem 0;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            border: 3px solid var(--secondary-yellow);
+        }
+        
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+        }
+        
+        .carousel-slide.active {
+            opacity: 1;
+        }
+        
+        .slide-content {
+            background: rgba(46, 125, 50, 0.9);
+            padding: 2.5rem;
+            max-width: 600px;
+            margin-left: 5%;
+            border-radius: 10px;
+            color: var(--white);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            border: 2px solid var(--primary-yellow);
+        }
+        
+        .slide-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-yellow);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .slide-content p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-yellow);
+            color: var(--dark-text);
+            padding: 14px 35px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary-yellow);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+        }
+        
+        .carousel-controls {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+        }
+        
+        .carousel-indicators {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .indicator {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+        
+        .indicator.active {
+            background-color: var(--primary-yellow);
+            transform: scale(1.2);
+        }
+        
+        /* Sección de plantas */
+        .plants-section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-green);
+            position: relative;
+            font-size: 2.2rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary-green), var(--light-green));
+            margin: 20px auto;
+            border-radius: 3px;
+        }
+        
+        .plants-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .plant-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(139, 195, 74, 0.3);
+        }
+        
+        .plant-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .plant-image {
+            height: 220px;
+            background-size: cover;
+            background-position: center;
+            border-bottom: 4px solid var(--light-green);
+        }
+        
+        .plant-info {
+            padding: 1.8rem;
+        }
+        
+        .plant-info h3 {
+            color: var(--primary-green);
+            margin-bottom: 12px;
+            font-size: 1.6rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .plant-info h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--light-green);
+        }
+        
+        .plant-info p {
+            margin-bottom: 15px;
+            color: #555;
+            line-height: 1.7;
+        }
+        
+        .care-list {
+            list-style: none;
+            margin-top: 1.2rem;
+        }
+        
+        .care-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s;
+        }
+        
+        .care-list li:hover {
+            background-color: rgba(139, 195, 74, 0.05);
+            transform: translateX(5px);
+        }
+        
+        .care-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .care-list i {
+            color: var(--light-green);
+            margin-right: 10px;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(139, 195, 74, 0.15);
+            border-radius: 50%;
+            padding: 5px;
+        }
+        
+        /* Sección de cuidados */
+        .care-section {
+            background-color: var(--gray);
+            padding: 4rem 0;
+            border-radius: 15px;
+            margin: 2rem 0;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(139, 195, 74, 0.2);
+        }
+        
+        .care-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .care-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 2.2rem;
+            box-shadow: var(--card-shadow);
+            border-top: 5px solid var(--light-green);
+            transition: all 0.3s ease;
+        }
+        
+        .care-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .care-card h3 {
+            color: var(--primary-green);
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+        }
+        
+        .care-card h3 i {
+            margin-right: 12px;
+            color: var(--primary-yellow);
+            background-color: rgba(255, 193, 7, 0.15);
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .care-card ul {
+            padding-left: 1.5rem;
+            margin-top: 1.2rem;
+        }
+        
+        .care-card ul li {
+            margin-bottom: 12px;
+            line-height: 1.7;
+            position: relative;
+        }
+        
+        .care-card ul li::before {
+            content: '🌿';
+            position: absolute;
+            left: -1.5rem;
+            top: 3px;
+        }
+        
+        /* Sección de Compra */
+        .shop-section {
+            background: linear-gradient(to right, var(--primary-green), var(--light-green));
+            padding: 4.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .shop-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>');
+            background-size: 30px 30px;
+            opacity: 0.2;
+        }
+        
+        /* Sección de Contacto */
+        .contact-section {
+            padding: 5rem 0;
+            position: relative;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(245, 245, 245, 0.9)), 
+                        url('https://images.unsplash.com/photo-1535599257826-2e04b5b40d71?auto=format&fit=crop&w=1920');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .contact-card {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: var(--card-shadow);
+            border: 2px solid var(--primary-yellow);
+            transition: all 0.4s ease;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .contact-card h3 {
+            color: var(--primary-green);
+            margin-bottom: 1.8rem;
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .contact-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-green), var(--light-green));
+            border-radius: 2px;
+        }
+        
+        .contact-card h3 i {
+            margin-right: 15px;
+            color: var(--primary-yellow);
+            background-color: rgba(255, 193, 7, 0.15);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .contact-details {
+            list-style: none;
+            margin-top: 1.8rem;
+        }
+        
+        .contact-details li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.8rem;
+            line-height: 1.7;
+            padding: 12px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .contact-details li:hover {
+            background-color: rgba(139, 195, 74, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .contact-details i {
+            color: var(--primary-green);
+            font-size: 1.4rem;
+            min-width: 40px;
+            padding-top: 5px;
+        }
+        
+        .contact-details .detail-content {
+            flex: 1;
+        }
+        
+        .contact-details .detail-content h4 {
+            color: var(--primary-green);
+            margin-bottom: 8px;
+            font-size: 1.2rem;
+        }
+        
+        .contact-details .detail-content p {
+            color: #555;
+            font-size: 1.05rem;
+        }
+        
+        .contact-form {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: var(--card-shadow);
+            border: 2px solid var(--primary-green);
+        }
+        
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--primary-green);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            transition: all 0.3s;
+            background-color: rgba(245, 245, 245, 0.7);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--light-green);
+            box-shadow: 0 0 0 4px rgba(139, 195, 74, 0.2);
+            background-color: white;
+        }
+        
+        textarea.form-control {
+            min-height: 160px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(to right, var(--primary-green), var(--secondary-green));
+            color: var(--white);
+            padding: 15px 40px;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(to right, var(--secondary-green), var(--light-green));
+        }
+        
+        .map-container {
+            margin-top: 3rem;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            height: 350px;
+            border: 3px solid var(--primary-yellow);
+        }
+        
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(to right, var(--primary-green), #1B5E20);
+            color: var(--light-text);
+            padding: 3.5rem 0 1.5rem;
+            position: relative;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 2.5rem;
+        }
+        
+        .footer-column h3 {
+            color: var(--primary-yellow);
+            margin-bottom: 1.8rem;
+            font-size: 1.5rem;
+            position: relative;
+            padding-bottom: 12px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--light-green);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: var(--light-text);
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            font-size: 1.05rem;
+        }
+        
+        .footer-links a i {
+            margin-right: 10px;
+            color: var(--light-green);
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-yellow);
+            transform: translateX(5px);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 18px;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background-color: rgba(255, 255, 255, 0.12);
+            border-radius: 50%;
+            color: var(--white);
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--primary-yellow);
+            color: var(--dark-text);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.8rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .carousel {
+                height: 450px;
+            }
+            
+            .slide-content {
+                padding: 2rem;
+            }
+            
+            .slide-content h2 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+            
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary-green);
+                flex-direction: column;
+                padding: 1.5rem 0;
+                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+                transition: clip-path 0.4s ease;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            }
+            
+            .nav-links.active {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+            
+            .nav-links li {
+                margin: 0;
+                text-align: center;
+            }
+            
+            .nav-links a {
+                display: block;
+                padding: 15px;
+                border-radius: 0;
+                margin: 0 15px 5px;
+            }
+            
+            .carousel {
+                height: 400px;
+            }
+            
+            .slide-content {
+                margin: 0 auto;
+                width: 90%;
+            }
+            
+            .slide-content h2 {
+                font-size: 2rem;
+            }
+            
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .carousel {
+                height: 350px;
+            }
+            
+            .slide-content {
+                padding: 1.5rem;
+            }
+            
+            .slide-content h2 {
+                font-size: 1.7rem;
+            }
+            
+            .btn {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+            
+            .plants-container,
+            .care-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header y Navegación -->
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-seedling"></i>
+                PlantaViva
+            </a>
+            
+            <div class="menu-toggle" id="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#" class="active">Inicio</a></li>
+                <li><a href="#plantas">Plantas</a></li>
+                <li><a href="#cuidados">Cuidados</a></li>
+                <li><a href="#comprar">Comprar</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Carrusel -->
+    <section class="carousel-container">
+        <div class="container">
+            <div class="carousel">
+                <div class="carousel-slide active" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1485955900006-10f4d324d411');">
+                    <div class="slide-content">
+                        <h2>Plantas que transforman tu espacio</h2>
+                        <p>Descubre nuestra colección exclusiva de plantas de interior y exterior. Lleva la naturaleza a tu hogar con nuestras plantas seleccionadas.</p>
+                        <a href="#comprar" class="btn">Ver Colección</a>
+                    </div>
+                </div>
+                
+                <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1598880940080-ff9a29891b80');">
+                    <div class="slide-content">
+                        <h2>Plantas de Jade: Prosperidad y Belleza</h2>
+                        <p>Conocidas como plantas de la fortuna, estas suculentas son perfectas para decorar y purificar tu hogar. ¡Disponibles ahora!</p>
+                        <a href="#jade" class="btn">Conocer más</a>
+                    </div>
+                </div>
+                
+                <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1557176508-9c91504eaf6c');">
+                    <div class="slide-content">
+                        <h2>Orquídeas: Elegancia Natural</h2>
+                        <p>Las orquídeas añaden sofisticación a cualquier espacio. Tenemos variedades exclusivas listas para embellecer tu hogar.</p>
+                        <a href="#orchid" class="btn">Ver Variedades</a>
+                    </div>
+                </div>
+                
+                <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1508070716380-e60c3e776cf7');">
+                    <div class="slide-content">
+                        <h2>Girasoles: Alegría en tu Jardín</h2>
+                        <p>Llena de luz tu espacio con nuestros girasoles. Disponibles en diferentes tamaños y variedades.</p>
+                        <a href="#sunflower" class="btn">Comprar Ahora</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="carousel-controls">
+                <div class="carousel-indicators">
+                    <div class="indicator active" data-slide="0"></div>
+                    <div class="indicator" data-slide="1"></div>
+                    <div class="indicator" data-slide="2"></div>
+                    <div class="indicator" data-slide="3"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Plantas -->
+    <section id="plantas" class="plants-section">
+        <div class="container">
+            <h2 class="section-title">Nuestras Plantas Destacadas</h2>
+            
+            <div class="plants-container">
+                <!-- Planta de Jade -->
+                <div class="plant-card">
+                    <div class="plant-image" style="background-image: url('https://images.unsplash.com/photo-1598880940080-ff9a29891b80');"></div>
+                    <div class="plant-info">
+                        <h3>Planta de Jade</h3>
+                        <p>Suculenta resistente que simboliza prosperidad. Ideal para interiores y fácil de cuidar.</p>
+                        <ul class="care-list">
+                            <li><i class="fas fa-sun"></i> Luz indirecta brillante</li>
+                            <li><i class="fas fa-tint"></i> Riego moderado</li>
+                            <li><i class="fas fa-thermometer-half"></i> 18-24°C</li>
+                            <li><i class="fas fa-paw"></i> Tóxica para mascotas</li>
+                        </ul>
+                        <a href="#jade" class="btn">Ver Cuidados</a>
+                    </div>
+                </div>
+                
+                <!-- Orquídeas -->
+                <div class="plant-card">
+                    <div class="plant-image" style="background-image: url('https://images.unsplash.com/photo-1557176508-9c91504eaf6c');"></div>
+                    <div class="plant-info">
+                        <h3>Orquídeas</h3>
+                        <p>Plantas elegantes con flores exóticas que añaden sofisticación a cualquier espacio.</p>
+                        <ul class="care-list">
+                            <li><i class="fas fa-sun"></i> Luz filtrada</li>
+                            <li><i class="fas fa-tint"></i> Riego cada 7-10 días</li>
+                            <li><i class="fas fa-thermometer-half"></i> 15-25°C</li>
+                            <li><i class="fas fa-wind"></i> Alta humedad</li>
+                        </ul>
+                        <a href="#orchid" class="btn">Ver Cuidados</a>
+                    </div>
+                </div>
+                
+                <!-- Girasoles -->
+                <div class="plant-card">
+                    <div class="plant-image" style="background-image: url('https://images.unsplash.com/photo-1508070716380-e60c3e776cf7');"></div>
+                    <div class="plant-info">
+                        <h3>Girasoles</h3>
+                        <p>Flores vibrantes que siguen el sol, perfectas para jardines y arreglos florales.</p>
+                        <ul class="care-list">
+                            <li><i class="fas fa-sun"></i> Pleno sol (6+ horas)</li>
+                            <li><i class="fas fa-tint"></i> Riego regular</li>
+                            <li><i class="fas fa-thermometer-half"></i> 18-30°C</li>
+                            <li><i class="fas fa-seedling"></i> Suelo bien drenado</li>
+                        </ul>
+                        <a href="#sunflower" class="btn">Ver Cuidados</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Cuidados -->
+    <section id="cuidados" class="care-section">
+        <div class="container">
+            <h2 class="section-title">Guía de Cuidados</h2>
+            
+            <div class="care-container">
+                <!-- Cuidados para Planta de Jade -->
+                <div class="care-card" id="jade">
+                    <h3><i class="fas fa-leaf"></i> Cuidados de la Planta de Jade</h3>
+                    <p>Originarias de Sudáfrica, las plantas de jade son suculentas resistentes que crecen lentamente (alrededor de 5 cm por año). Son consideradas plantas de buena suerte.</p>
+                    <ul>
+                        <li><strong>Luz:</strong> Necesitan al menos 4-6 horas de luz solar indirecta al día. Evita el sol directo intenso que puede quemar las hojas .</li>
+                        <li><strong>Suelo:</strong> Usa una mezcla específica para suculentas con buen drenaje. Si usas tierra normal, añade perlita. El pH ideal es neutro a ligeramente ácido .</li>
+                        <li><strong>Riego:</strong> En primavera/verano, riega cuando la tierra esté seca al tacto. En invierno, reduce a 1-2 veces al mes. Nunca dejes la planta en agua estancada .</li>
+                        <li><strong>Temperatura:</strong> Ideal 18-24°C. Soporta hasta 10°C por la noche pero no heladas .</li>
+                        <li><strong>Toxicidad:</strong> Tóxica para perros y gatos. Síntomas: vómitos, letargo, debilidad .</li>
+                    </ul>
+                </div>
+                
+                <!-- Cuidados para Orquídeas -->
+                <div class="care-card" id="orchid">
+                    <h3><i class="fas fa-spa"></i> Cuidados de las Orquídeas</h3>
+                    <p>Con más de 25,000 especies, las orquídeas son una de las familias de plantas más diversas. Sus flores pueden durar meses con los cuidados adecuados.</p>
+                    <ul>
+                        <li><strong>Luz:</strong> Luz indirecta brillante (ventanas este u oeste). Evita el sol directo que quema las hojas.</li>
+                        <li><strong>Riego:</strong> Sumerge las raíces en agua 10-15 minutos cuando el sustrato esté casi seco. Drena completamente.</li>
+                        <li><strong>Humedad:</strong> Prefieren 50-70% de humedad. Usa bandeja con guijarros y agua debajo de la maceta.</li>
+                        <li><strong>Sustrato:</strong> Especial para orquídeas (corteza de pino, carbón vegetal y musgo sphagnum).</li>
+                        <li><strong>Fertilización:</strong> Usa fertilizante balanceado 20-20-20 diluido cada 2 semanas durante crecimiento.</li>
+                    </ul>
+                </div>
+                
+                <!-- Cuidados para Girasoles -->
+                <div class="care-card" id="sunflower">
+                    <h3><i class="fas fa-sun"></i> Cuidados de los Girasoles</h3>
+                    <p>Simbolizan alegría y vitalidad, los girasoles (Helianthus annuus) pueden crecer hasta 3 metros en variedades gigantes. Son plantas anuales que florecen en verano .</p>
+                    <ul>
+                        <li><strong>Luz:</strong> Necesitan pleno sol (mínimo 6-8 horas diarias) para desarrollarse adecuadamente .</li>
+                        <li><strong>Suelo:</strong> Prefieren suelo fértil, bien drenado y ligeramente ácido a alcalino (pH 6.0-7.5).</li>
+                        <li><strong>Riego:</strong> Riego profundo 1-2 veces por semana, especialmente durante formación de capullos.</li>
+                        <li><strong>Época de siembra:</strong> Directamente en tierra después de última helada, cuando suelo está a 13-16°C .</li>
+                        <li><strong>Soporte:</strong> Las variedades altas necesitan estacas para evitar que se doblen con el viento.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Compra -->
+    <section id="comprar" class="shop-section">
+        <div class="container">
+            <h2 class="section-title" style="color: var(--white);">Lista para Llevar a Casa</h2>
+            <p style="text-align: center; color: var(--light-text); max-width: 800px; margin: 0 auto 3rem; font-size: 1.1rem;">
+                Descubre nuestra selección de plantas saludables y listas para transformar tu espacio. Todas nuestras plantas vienen con instrucciones de cuidado y garantía de calidad.
+            </p>
+            
+            <div class="plants-container">
+                <div class="plant-card">
+                    <div class="plant-image" style="background-image: url('https://images.unsplash.com/photo-1598880940080-ff9a29891b80');"></div>
+                    <div class="plant-info">
+                        <h3>Planta de Jade Mediana</h3>
+                        <p>Planta de jade saludable de 3 años, altura 25-30 cm. Incluye maceta de terracota.</p>
+                        <p style="font-size: 1.5rem; color: var(--primary-green); font-weight: bold; margin: 15px 0;">$24.900</p>
+                        <a href="#" class="btn" style="background-color: var(--primary-yellow);">Añadir al Carrito</a>
+                    </div>
+                </div>
+                
+                <div class="plant-card">
+                    <div class="plant-image" style="background-image: url('https://images.unsplash.com/photo-1557176508-9c91504eaf6c');"></div>
+                    <div class="plant-info">
+                        <h3>Orquídea Phalaenopsis</h3>
+                        <p>Orquídea blanca en flor, incluye maceta decorativa. Altura 40-45 cm.</p>
+                        <p style="font-size: 1.5rem; color: var(--primary-green); font-weight: bold; margin: 15px 0;">$36.900</p>
+                        <a href="#" class="btn" style="background-color: var(--primary-yellow);">Añadir al Carrito</a>
+                    </div>
+                </div>
+                
+                <div class="plant-card">
+                    <div class="plant-image" style="background-image: url('https://images.unsplash.com/photo-1508070716380-e60c3e776cf7');"></div>
+                    <div class="plant-info">
+                        <h3>Kit de Girasoles</h3>
+                        <p>Paquete con 5 variedades de girasoles (semillas) + sustrato inicial.</p>
+                        <p style="font-size: 1.5rem; color: var(--primary-green); font-weight: bold; margin: 15px 0;">$21.900</p>
+                        <a href="#" class="btn" style="background-color: var(--primary-yellow);">Añadir al Carrito</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Contacto -->
+    <section id="contacto" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Contáctanos</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 3rem; font-size: 1.1rem; color: var(--dark-text);">
+                ¿Tienes preguntas sobre el cuidado de tus plantas? ¿Necesitas asesoría para elegir la planta perfecta? 
+                Completa el formulario y nuestro equipo de expertos te responderá en menos de 24 horas.
+            </p>
+            
+            <div class="contact-container">
+                <div class="contact-card">
+                    <h3><i class="fas fa-info-circle"></i> Información de Contacto</h3>
+                    
+                    <ul class="contact-details">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div class="detail-content">
+                                <h4>Dirección</h4>
+                                <p>Carrera 7 # 120-45, Chapinero<br>Bogotá, Colombia</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <div class="detail-content">
+                                <h4>Teléfono</h4>
+                                <p>+57 1 234 5678</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <div class="detail-content">
+                                <h4>Email</h4>
+                                <p>info@plantaviva.com</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-clock"></i>
+                            <div class="detail-content">
+                                <h4>Horario de Atención</h4>
+                                <p>Lunes a Viernes: 8:00 - 18:00<br>Sábados: 9:00 - 17:00<br>Domingos: Cerrado</p>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <div class="social-icons" style="margin-top: 20px; padding-left: 10px;">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3><i class="fas fa-comments"></i> Envíanos un Mensaje</h3>
+                    
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Nombre Completo</label>
+                            <input type="text" id="name" class="form-control" placeholder="Tu nombre" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Correo Electrónico</label>
+                            <input type="email" id="email" class="form-control" placeholder="tu@email.com" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Asunto</label>
+                            <input type="text" id="subject" class="form-control" placeholder="¿Sobre qué quieres consultar?">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Mensaje</label>
+                            <textarea id="message" class="form-control" placeholder="Escribe tu mensaje aquí..." required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Enviar Mensaje</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.785364609318!2d-74.05611032533844!3d4.638817942241062!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9a3b0c0d3f1f%3A0x9c7d5a1c0f0d3f1f!2sChapinero%2C%20Bogot%C3%A1%2C%20Colombia!5e0!3m2!1ses!2ses!4v1717545600000!5m2!1ses!2ses" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h3>PlantaViva</h3>
+                    <p style="margin-bottom: 15px; font-size: 1.05rem;">Tu tienda de confianza para plantas de calidad y accesorios de jardinería. Transformando espacios desde 2018.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Inicio</a></li>
+                        <li><a href="#plantas"><i class="fas fa-chevron-right"></i> Nuestras Plantas</a></li>
+                        <li><a href="#cuidados"><i class="fas fa-chevron-right"></i> Guía de Cuidados</a></li>
+                        <li><a href="#comprar"><i class="fas fa-chevron-right"></i> Tienda</a></li>
+                        <li><a href="#contacto"><i class="fas fa-chevron-right"></i> Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Horario de Atención</h3>
+                    <ul class="footer-links">
+                        <li><i class="far fa-clock"></i> Lunes-Viernes: 8:00 - 18:00</li>
+                        <li><i class="far fa-clock"></i> Sábado: 9:00 - 17:00</li>
+                        <li><i class="far fa-clock"></i> Domingo: Cerrado</li>
+                        <li><i class="fas fa-phone"></i> Tel: +57 1 234 5678</li>
+                        <li><i class="fas fa-envelope"></i> info@plantaviva.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 PlantaViva. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Menú móvil
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.getElementById('nav-links');
+        
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+        
+        // Carrusel
+        const slides = document.querySelectorAll('.carousel-slide');
+        const indicators = document.querySelectorAll('.indicator');
+        let currentSlide = 0;
+        
+        function showSlide(index) {
+            // Oculta todos los slides
+            slides.forEach(slide => slide.classList.remove('active'));
+            indicators.forEach(indicator => indicator.classList.remove('active'));
+            
+            // Muestra el slide seleccionado
+            slides[index].classList.add('active');
+            indicators[index].classList.add('active');
+            currentSlide = index;
+        }
+        
+        // Eventos para los indicadores
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                showSlide(index);
+            });
+        });
+        
+        // Cambio automático de slides
+        function nextSlide() {
+            let nextIndex = (currentSlide + 1) % slides.length;
+            showSlide(nextIndex);
+        }
+        
+        // Cambia de slide cada 5 segundos
+        setInterval(nextSlide, 5000);
+        
+        // Mostrar el primer slide al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            showSlide(0);
+        });
+        
+        // Scroll suave para enlaces internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Cerrar menú móvil si está abierto
+                    if (navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                        mobileMenu.classList.remove('active');
+                    }
+                }
+            });
+        });
+        
+        // Manejo del formulario de contacto
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Simulación de envío exitoso
+                alert('¡Gracias por tu mensaje! Te responderemos en menos de 24 horas.');
+                
+                // Limpiar el formulario
+                contactForm.reset();
+            });
+        }
+    </script>
+</body>
+</html>
